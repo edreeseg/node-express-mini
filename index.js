@@ -7,9 +7,8 @@ const db = require('./data/db');
 const server = express();
 server.use(bodyParser.json());
 
-const STATUS_USER_ERROR = 422;
-
 server.get('/api/users', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
     db.find()
         .then(users => {
             res.json({ users });
