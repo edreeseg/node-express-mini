@@ -49,7 +49,7 @@ server.get('/api/users/:id', (req, res) => {
     const id = req.params.id;
     db.findById(id)
         .then(result => {
-            if (result.length === 0){
+            if ((result||[]).length === 0){
                 res.status(404);
                 res.json({ message: "The user with the specified ID does not exist." });
             } else {
@@ -66,7 +66,7 @@ server.delete('/api/users/:id', (req, res) => {
     const id = req.params.id;
     db.findById(id)
         .then(user => {
-            if (user.length === 0){
+            if ((user||[]).length === 0){
                 res.status(404);
                 res.json({ message: "The user with the specified ID does not exist." });
             } else {
@@ -79,7 +79,6 @@ server.delete('/api/users/:id', (req, res) => {
             }
         })
         .catch(err => {
-            console.log(err);
             res.status(500);
             res.json({ error: "The user could not be removed." });
         });
@@ -95,7 +94,7 @@ server.put('/api/users/:id', (req, res) => {
     }
     db.findById(id)
         .then(result => {
-            if (result.length === 0){
+            if ((result||[]).length === 0){
                 res.status(404);
                 res.json({ message: "The user with the specified ID does not exist." });
             } else {
